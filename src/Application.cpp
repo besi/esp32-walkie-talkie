@@ -9,7 +9,6 @@
 #include "UdpTransport.h"
 #include "EspNowTransport.h"
 #include "OutputBuffer.h"
-#include "TinyPICOIndicatorLed.h"
 #include "config.h"
 
 static void application_task(void *param)
@@ -39,7 +38,6 @@ Application::Application()
 #else
   m_transport = new UdpTransport(m_output_buffer);
 #endif
-  m_indicator_led = new TinyPICOIndicatorLed();
 
   if (I2S_SPEAKER_SD_PIN != -1)
   {
@@ -50,9 +48,7 @@ Application::Application()
 void Application::begin()
 {
   // show a flashing indicator that we are trying to connect
-  m_indicator_led->set_default_color(0);
-  m_indicator_led->set_is_flashing(true, 0xff0000);
-  m_indicator_led->begin();
+
   // bring up WiFi
   WiFi.mode(WIFI_STA);
   // but don't connect if we're using ESP NOW
@@ -76,8 +72,6 @@ void Application::begin()
   // do any setup of the transport
   m_transport->begin();
   // connected so show a solid green light
-  m_indicator_led->set_default_color(0x00ff00);
-  m_indicator_led->set_is_flashing(false, 0x00ff00);
   // setup the transmit button
   pinMode(GPIO_TRANSMIT_BUTTON, INPUT_PULLDOWN);
   // start off with i2S output running
@@ -98,7 +92,6 @@ void Application::loop()
     if (digitalRead(GPIO_TRANSMIT_BUTTON))
     {
       Serial.println("Started transmitting");
-      m_indicator_led->set_is_flashing(true, 0xff0000);
       // stop the output as we're switching into transmit mode
       m_output->stop();
       // start the input to get samples from the microphone
@@ -117,7 +110,6 @@ void Application::loop()
       }
       // finished transmitting stop the input and start the output
       Serial.println("Finished transmitting");
-      m_indicator_led->set_is_flashing(false, 0xff0000);
       m_input->stop();
       m_output->start(SAMPLE_RATE);
     }
