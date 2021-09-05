@@ -2,8 +2,12 @@
 #include <driver/i2s.h>
 
 // WiFi credentials
-#define WIFI_SSID << YOUR_SSID >>
-#define WIFI_PSWD << YOUR_PASSWORD >>
+// wifi.h must include the following two lines:
+// 
+//     #define WIFI_SSID "whatever"
+//     #define WIFI_PSWD "secret"
+#include "wifi_config.h"
+
 
 // sample rate for the system
 #define SAMPLE_RATE 16000
