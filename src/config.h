@@ -41,7 +41,7 @@
 
 // Which transport do you want to use? ESP_NOW or UDP?
 // comment out this line to use UDP
-// #define USE_ESP_NOW
+#define USE_ESP_NOW
 
 // i2s config for using the internal ADC
 extern i2s_config_t i2s_adc_config;
