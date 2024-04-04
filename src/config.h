@@ -37,7 +37,7 @@
 #define I2S_SPEAKER_SD_PIN -1
 
 // transmit button
-#define GPIO_TRANSMIT_BUTTON 35
+#define GPIO_TRANSMIT_BUTTON 2
 
 // Which transport do you want to use? ESP_NOW or UDP?
 // comment out this line to use UDP
